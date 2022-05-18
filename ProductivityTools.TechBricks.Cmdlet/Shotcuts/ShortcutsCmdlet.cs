@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ProductivityTools.TechBricks.Cmdlet.Shotcuts
 {
     [Cmdlet(VerbsCommon.Get,"Shortcuts")]
-    internal class ShortcutsCmdlet :PSCmdlet.PSCmdletPT
+    public class ShortcutsCmdlet :PSCmdlet.PSCmdletPT
     {
         protected override void ProcessRecord()
         {

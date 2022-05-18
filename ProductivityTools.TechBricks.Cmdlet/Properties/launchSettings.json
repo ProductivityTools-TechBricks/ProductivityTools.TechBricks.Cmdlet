@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "ProductivityTools.TechBricks.Cmdlet": {
+      "commandName": "Project",
+      "commandLineArgs": "-noexit -command \"import-module ProductivityTools.TechBricks.dll\""
+    },
+    "Profile 1": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+      "commandLineArgs": "-noexit -command \"import-module .\\ProductivityTools.TechBricks.dll\""
+    }
+  }
+}
