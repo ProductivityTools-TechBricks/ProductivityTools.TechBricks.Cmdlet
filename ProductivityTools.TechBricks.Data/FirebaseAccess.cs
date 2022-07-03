@@ -32,7 +32,9 @@ namespace ProductivityTools.TechBricks.Data
             {
                 var resultAsString = await response.Content.ReadAsStringAsync();
                 // T result = JsonConvert.DeserializeObject<T>(resultAsString);
-                // return resultAsString;
+                // return resultAsString;.  
+                ///https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
+                /////https://firebase.google.com/docs/auth/admin/create-custom-tokens?hl=en#web
             }
             throw new Exception(response.ReasonPhrase);
         }
