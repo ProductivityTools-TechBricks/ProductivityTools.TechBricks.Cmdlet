@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TechBricks - PowerShell sign in</title>
+    <style>
+        body { font-family: Segoe UI, Roboto, Arial, sans-serif; background: #f5f5f5; display: flex; justify-content: center; margin-top: 10vh; }
+        .card { background: white; padding: 32px 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.15); max-width: 480px; text-align: center; }
+        button { font-size: 16px; padding: 10px 24px; cursor: pointer; }
+        .ok { color: #2e7d32; }
+        .error { color: #c62828; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>TechBricks</h2>
+        <p>Sign in to authorize the <b>ProductivityTools.TechBricks</b> PowerShell module.</p>
+        <p><button id="login">Sign in with Google</button></p>
+        <p id="status"></p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, inMemoryPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "__API_KEY__",
+            authDomain: "__AUTH_DOMAIN__",
+            projectId: "__PROJECT_ID__",
+            appId: "__APP_ID__"
+        };
+        const state = "__STATE__";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const status = document.getElementById("status");
+        const button = document.getElementById("login");
+
+        function show(text, cls) {
+            status.textContent = text;
+            status.className = cls || "";
+        }
+
+        button.addEventListener("click", async () => {
+            button.disabled = true;
+            show("Signing in...");
+            try {
+                // The session must live only in PowerShell, not in this temporary page.
+                await setPersistence(auth, inMemoryPersistence);
+                const result = await signInWithPopup(auth, new GoogleAuthProvider());
+                const response = await fetch("/callback", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        state: state,
+                        refreshToken: result.user.refreshToken,
+                        email: result.user.email
+                    })
+                });
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
+                await auth.signOut();
+                show("Signed in as " + result.user.email + ". You can close this tab and return to PowerShell.", "ok");
+            } catch (err) {
+                console.error(err);
+                show("Sign in failed: " + err.message, "error");
+                button.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

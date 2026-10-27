@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>ProductivityTools.TechBricks</AssemblyName>
@@ -10,10 +10,18 @@
 
   <ItemGroup>
     <PackageReference Include="ProductivityTools.PSCmdlet" Version="1.0.6" />
+    <!-- Reference assembly only - PowerShell provides System.Management.Automation at runtime. -->
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.1" PrivateAssets="all" ExcludeAssets="runtime" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProductivityTools.TechBricks.Data\ProductivityTools.TechBricks.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ProductivityTools.TechBricks.psd1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
