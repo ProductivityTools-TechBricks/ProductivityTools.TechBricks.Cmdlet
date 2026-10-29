@@ -20,10 +20,11 @@ Import-Module .\ProductivityTools.TechBricks.Cmdlet\bin\Release\net8.0\Productiv
 | `Connect-TechBricks` | Signs in through the browser (Google account) and stores the session locally. |
 | `Disconnect-TechBricks` | Removes the locally stored session. |
 | `Get-TechBricksPallet [-Name <wildcard>] [-Owner <gmail login>]` | Returns pallets visible to the signed in user. |
-| `Get-TechBricksBrick [-Pallet <wildcard>] [-Key <wildcard>] [-Owner <gmail login>]` | Returns bricks (key/value) of the pallets. |
+| `Get-TechBricksBrick [-Pallet <wildcard>] [-Description <wildcard>] [-Content <wildcard>] [-Owner <gmail login>]` | Returns bricks (`Description` = title, `Brick` = content) of the pallets. `-Key`/`-Title` are aliases of `-Description`. |
 
 ```
-Get-TechBricksBrick -Pallet VS* -Key *debug*
+Get-TechBricksBrick -Pallet VS* -Description *debug*
+Get-TechBricksBrick GAS -Content *Spreadsheet* | Format-List
 ```
 
 ## Authentication
