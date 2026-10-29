@@ -37,3 +37,15 @@ The API accepts only Firebase ID tokens (project `ptprojectsweb`, the same as th
 4. Short-lived (1h) ID tokens are minted from the refresh token via `securetoken.googleapis.com`, so the browser sign in is needed only once.
 
 Sign in is started automatically by any cmdlet when there is no valid session. `localhost` has to be on the list of authorized domains in Firebase Authentication (it is there by default).
+
+## Publish to PowerShell Gallery
+
+Increase `ModuleVersion` in `ProductivityTools.TechBricks.Cmdlet/ProductivityTools.TechBricks.psd1`, then:
+
+```
+$env:PSGALLERY_API_KEY = '<key from https://www.powershellgallery.com/account/apikeys>'
+./publish.ps1 -WhatIf   # dry run
+./publish.ps1
+```
+
+The script builds the solution, stages the module in `artifacts/ProductivityTools.TechBricks` (Publish-Module requires a directory named like the module) and publishes it.
